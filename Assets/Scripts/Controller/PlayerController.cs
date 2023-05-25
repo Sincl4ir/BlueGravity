@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace BlueGravity.Movement
+namespace BlueGravity.Controller
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float _speed = 10f;
         [SerializeField] private Rigidbody2D _rigidbody;
