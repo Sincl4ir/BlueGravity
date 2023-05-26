@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
-using BlueGravity.UI;
 using BlueGravity.Tapestry;
+using BlueGravity.EquipmentSystem;
+using System.Collections.Generic;
 
 namespace BlueGravity.Inventory
 {
@@ -10,11 +11,9 @@ namespace BlueGravity.Inventory
         [Range(1, 6)]
         [SerializeField] private int _inventorySize = 6;
         [SerializeField] private Equipment _equipment;
-
+        [SerializeField] private List<InventoryItem> _items;
+        
         private int _currentItemsInInventory = 0;
-
-        public Func<InventoryItem, bool> ItemEquippedEvent;
-        public event Action ItemEquippedSuccessfully;
         public int InventorySize => _inventorySize;
 
         private void OnEnable()
@@ -31,6 +30,11 @@ namespace BlueGravity.Inventory
         private void Start()
         {
             TapestryEventRegistry.OnInventoryInitializedTE.Invoke(_inventorySize);
+
+            foreach (var item in _items)
+            {
+                AddItemToInventory(item);
+            }
         }
         public void AddItemToInventory(InventoryItem item)
         {
@@ -64,7 +68,7 @@ namespace BlueGravity.Inventory
         
         private bool AvailableSpaceInInventory()
         {
-            return _currentItemsInInventory > _inventorySize;
+            return _currentItemsInInventory <= _inventorySize;
         }
 
         private void OnDisable()

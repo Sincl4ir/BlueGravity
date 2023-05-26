@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace BlueGravity.Inventory
 {
+    [System.Serializable]
     public class InventorySlot : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private GameObject _childInventoryItem;
@@ -13,10 +14,6 @@ namespace BlueGravity.Inventory
         private InventoryItem _inventoryItem;
         public bool IsChildActive { get; private set; }
         public InventoryItem InventoryItem => _inventoryItem;
-        private void Start()
-        {
-            IsChildActive = false;
-        }
 
         public void SetUIManager(UIManager uiManager)
         {
@@ -28,6 +25,7 @@ namespace BlueGravity.Inventory
             _inventoryItem = item;
             _childSpriteRenderer.sprite = item.Sprite;
             IsChildActive = true;
+            Debug.Log(IsChildActive);
             _childInventoryItem.SetActive(IsChildActive);
         }
 
@@ -44,6 +42,7 @@ namespace BlueGravity.Inventory
             if(_inventoryItem == null) { return; }
             if(_UIManager == null) { return; }
 
+            //Tapestry callback
             var uimanagers = FindObjectsOfType<UIManager>();
             for (int i = 0; i < uimanagers.Length; i++)
             {
@@ -51,7 +50,7 @@ namespace BlueGravity.Inventory
             }
             _UIManager.SetSelectedInventoryItem(_inventoryItem, this);
             _UIManager.SetDescriptionText(_inventoryItem);
-            Debug.Log("Setting inventory item as it was clicked");
+            //Debug.Log("Setting inventory item as it was clicked");
         }
     }
 }
