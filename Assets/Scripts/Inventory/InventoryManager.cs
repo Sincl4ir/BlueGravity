@@ -1,79 +1,78 @@
 using System;
 using UnityEngine;
-//using BGS.UI;
+using BlueGravity.UI;
+using BlueGravity.Tapestry;
 
 namespace BlueGravity.Inventory
 {
     public class InventoryManager : MonoBehaviour
     {
-        public static InventoryManager Instance { get; private set; }
-
         [Range(1, 6)]
-        [SerializeField] private int _inventorySize;
-        //[SerializeField] private InventoryUIManager _inventoryUIManager;
+        [SerializeField] private int _inventorySize = 6;
+        [SerializeField] private Equipment _equipment;
+
+        private int _currentItemsInInventory = 0;
 
         public Func<InventoryItem, bool> ItemEquippedEvent;
         public event Action ItemEquippedSuccessfully;
-        
         public int InventorySize => _inventorySize;
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Instance = this;
-            }
-        }
 
-        public bool AddItemToInventory(InventoryItem item)
+        private void OnEnable()
         {
-            //if (!AvailableSpaceInInventory())
+            TapestryEventRegistry.OnItemEquippedTE.RemoveRepeatingMethod(ItemEquipped);
+            TapestryEventRegistry.OnItemEquippedTE.SubscribeMethod(ItemEquipped);
+
+            TapestryEventRegistry.OnItemUnequippedTE.RemoveRepeatingMethod(HandleItemUnequipped);
+            TapestryEventRegistry.OnItemUnequippedTE.SubscribeMethod(HandleItemUnequipped);
+
+            TapestryEventRegistry.OnTryToAddItemToInventoryTE.RemoveRepeatingMethod(AddItemToInventory);
+            TapestryEventRegistry.OnTryToAddItemToInventoryTE.SubscribeMethod(AddItemToInventory);
+        }
+        private void Start()
+        {
+            TapestryEventRegistry.OnInventoryInitializedTE.Invoke(_inventorySize);
+        }
+        public void AddItemToInventory(InventoryItem item)
+        {
+            if (!AvailableSpaceInInventory())
             {
                 Debug.Log("Not enough space");
-                return false;
+                return;
             }
-            //_inventoryUIManager.AddItemToInventory(item);
-            return true;
+
+            _currentItemsInInventory++;
+            TapestryEventRegistry.OnInventoryItemAddedTE.Invoke(item);
         }
 
-        public void RemoveItemFromInventory(InventorySlot slot)
+        private void HandleItemUnequipped(InventoryItem item)
         {
-            //_inventoryUIManager.RemoveItemFromInventory(slot);
+            _currentItemsInInventory++;
+            TapestryEventRegistry.OnInventoryItemAddedTE.Invoke(item);
+        }
+
+        public void RemoveItemFromInventory(InventoryItem item)
+        {
+            //Tapestry call
+            _currentItemsInInventory--;
+            TapestryEventRegistry.OnInventoryItemRemovedTE.Invoke(item);
         }
         public void ItemEquipped(InventoryItem item)
         {
-            if (ItemEquippedEvent == null) { return; }
-            if (ItemEquippedEvent(item))
-            {
-                Debug.Log("Item successfully equiped");
-                ItemEquippedSuccessfully?.Invoke();
-                //RemoveItemFromInventory(GetSelectedSlotInInventory());
-            }
+            _equipment.OnItemEquipped(item);
+            RemoveItemFromInventory(item);
         }
-
-        /*
+        
         private bool AvailableSpaceInInventory()
         {
-            List<InventorySlot> slots = _inventoryUIManager.CurrentInventory;
-            foreach (var slot in slots)
-            {
-                if (!slot.IsChildActive) { return true; }
-            }
-            return false;
-    }
-
-        public InventoryItem GetSelectedItemInInventory()
-        {
-            return _inventoryUIManager.SelectedItem;
+            return _currentItemsInInventory > _inventorySize;
         }
 
-        public InventorySlot GetSelectedSlotInInventory()
+        private void OnDisable()
         {
-            return _inventoryUIManager.SelectedSlot;
-        }*/
+            TapestryEventRegistry.OnItemEquippedTE.RemoveRepeatingMethod(ItemEquipped);
+            TapestryEventRegistry.OnItemUnequippedTE.RemoveRepeatingMethod(HandleItemUnequipped);
+            TapestryEventRegistry.OnTryToAddItemToInventoryTE.RemoveRepeatingMethod(AddItemToInventory);
+        }
     }
 }
 //EOF.

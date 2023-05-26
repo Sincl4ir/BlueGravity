@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 7919717595651473994}
   - component: {fileID: 7919717595651473992}
   - component: {fileID: 7919717595651473995}
-  - component: {fileID: 119095595612230048}
+  - component: {fileID: 2552001735148026934}
   m_Layer: 0
   m_Name: InventorySlot
   m_TagString: Untagged
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 5
---- !u!114 &119095595612230048
+--- !u!114 &2552001735148026934
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,8 +163,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7919717595651473997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25082a3779c9dff4cafca6b7553c6908, type: 3}
+  m_Script: {fileID: 11500000, guid: 1aac1fc0db8e9034a8f85033cccb00bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _childInventoryItem: {fileID: 3029543185631395999}
-  _childSpriteRenderer: {fileID: 7962635742375972376}
+  _childSpriteRenderer: {fileID: 0}

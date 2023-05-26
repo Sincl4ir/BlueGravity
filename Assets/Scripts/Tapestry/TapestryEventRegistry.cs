@@ -1,15 +1,46 @@
-﻿namespace BlueGravity.Tapestry
+﻿using BlueGravity.Inventory;
+
+namespace BlueGravity.Tapestry
 {
     public class TapestryEventRegistry
     {
 
-        #region Player
+        #region Inventory
         /// <summary>
-        /// Reports Player death
+        /// Called on Player initialization in order to create inventory for the specific size.
         /// </summary>
-        //public static TapestryEvent<Entity> OnPlayerDeathTE;
+        public static TapestryEvent<int> OnInventoryInitializedTE;
+        
+        /// <summary>
+        /// Inventory item added to inventory.
+        /// </summary>
+        public static TapestryEvent<InventoryItem> OnInventoryItemAddedTE;
+
+        /// <summary>
+        /// Inventory item added to inventory.
+        /// </summary>
+        public static TapestryEvent<InventoryItem> OnTryToAddItemToInventoryTE;
+
+        /// <summary>
+        /// Inventory item removed from inventory.
+        /// </summary>
+        public static TapestryEvent<InventoryItem> OnInventoryItemRemovedTE;
+
+
         #endregion
-      
+
+        #region Equipment
+        /// <summary>
+        /// Inventory Item equipped succesfully on inventory.
+        /// </summary>
+        public static TapestryEvent<InventoryItem> OnItemEquippedTE;
+
+        /// <summary>
+        /// Inventory Item unequipped succesfully on inventory.
+        /// </summary>
+        public static TapestryEvent<InventoryItem> OnItemUnequippedTE;
+        #endregion
+
         static TapestryEventRegistry()
         {
             CreateTapestryEvents();
@@ -17,10 +48,18 @@
 
         private static void CreateTapestryEvents()
         {
-            #region Player
-            //OnPlayerDeathTE = new TapestryEvent<Entity>();
+
+            #region Inventory
+            OnInventoryInitializedTE = new TapestryEvent<int>();
+            OnInventoryItemAddedTE = new TapestryEvent<InventoryItem>();
+            OnTryToAddItemToInventoryTE = new TapestryEvent<InventoryItem>();
+            OnInventoryItemRemovedTE = new TapestryEvent<InventoryItem>();
             #endregion
 
+            #region Equipment
+            OnItemEquippedTE = new TapestryEvent<InventoryItem>();
+            OnItemUnequippedTE = new TapestryEvent<InventoryItem>();
+            #endregion
         }
 
         public static void OnDestroy()

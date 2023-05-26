@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BlueGravity.Inventory
 {
-    [CreateAssetMenu(fileName = "New Inventory Item", menuName = "BGS/Inventory Item")]
+    [CreateAssetMenu(fileName = "New Inventory Item", menuName = "Blue Gravity/Inventory Item")]
     public class InventoryItem : ScriptableObject, IEquipable
     {
         [SerializeField] public Sprite Sprite;
@@ -11,7 +11,6 @@ namespace BlueGravity.Inventory
         [SerializeField] public int Value;
         [TextArea(3,3)]
         [SerializeField] public string Description;
-        [SerializeField] public AnimatorOverrideController AnimatorOverrideController;
 
         public void OnEquip()
         {
