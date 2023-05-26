@@ -24,9 +24,6 @@ namespace BlueGravity.UI
             TapestryEventRegistry.OnShopOpenedTE.RemoveRepeatingMethod(OpenShop);
             TapestryEventRegistry.OnShopOpenedTE.SubscribeMethod(OpenShop, false);
 
-            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(CloseShop);
-            TapestryEventRegistry.OnShopClosedTE.SubscribeMethod(CloseShop, false);
-
             TapestryEventRegistry.OnItemSoldByPlayerTE.RemoveRepeatingMethod(AddItemToShopInventory);
             TapestryEventRegistry.OnItemSoldByPlayerTE.SubscribeMethod(AddItemToShopInventory);
 
@@ -95,7 +92,8 @@ namespace BlueGravity.UI
             UnpopulateShopItems();
             _uiContainer.SetActive(false);
             _currentItemsInShop.Clear();
-            _shopper.ShopClosed();
+
+            TapestryEventRegistry.OnShopClosedTE.Invoke();
         }
         public void HandlePurchase()
         {
@@ -119,7 +117,6 @@ namespace BlueGravity.UI
         private void OnDisable()
         {
             TapestryEventRegistry.OnShopOpenedTE.RemoveRepeatingMethod(OpenShop);
-            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(CloseShop);
             TapestryEventRegistry.OnItemSoldByPlayerTE.RemoveRepeatingMethod(AddItemToShopInventory);
             TapestryEventRegistry.OnItemPurchasedByPlayerTE.RemoveRepeatingMethod(RemoveFromShopInventory);
         }

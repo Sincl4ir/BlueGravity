@@ -27,6 +27,9 @@ namespace BlueGravity.Character
 
             TapestryEventRegistry.OnPlayerTrySellItemTE.RemoveRepeatingMethod(OnTryPurchaseItem);
             TapestryEventRegistry.OnPlayerTrySellItemTE.SubscribeMethod(OnTryPurchaseItem);
+
+            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(ShopClosed);
+            TapestryEventRegistry.OnShopClosedTE.SubscribeMethod(ShopClosed, false);
         }
 
         private void OnTryPurchaseItem(InventoryItem item)
@@ -66,6 +69,7 @@ namespace BlueGravity.Character
 
         public override void HandleResponse(DialogueAction action)
         {
+            Debug.Log(action.NeedsResponse);
             if (!action.NeedsResponse) { return; }
             _hud.SetActive(false);
 
@@ -96,6 +100,7 @@ namespace BlueGravity.Character
         {
             TapestryEventRegistry.OnItemPurchasedByPlayerTE.RemoveRepeatingMethod(OnItemSold);
             TapestryEventRegistry.OnPlayerTrySellItemTE.RemoveRepeatingMethod(OnTryPurchaseItem);
+            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(ShopClosed);
         }
     }
 }

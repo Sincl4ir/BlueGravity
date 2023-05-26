@@ -1,7 +1,7 @@
+using BlueGravity.Character;
+using BlueGravity.UI;
 using System.Collections.Generic;
 using UnityEngine;
-//using BGS.UI;
-//using BGS.Character;
 
 namespace BlueGravity.DialogueSystem
 {
@@ -9,9 +9,8 @@ namespace BlueGravity.DialogueSystem
     {
         public static DialogueManager Instance { get; private set; }
 
-        //[SerializeField] private DialogueUIManager _dialogueUI;
-        //private NPC _transmitter;
-        private GameObject _transmitter;
+        [SerializeField] private DialogueUIManager _dialogueUI;
+        private NPC _transmitter;
         private List<DialogueAction> responses = new List<DialogueAction>();
         private bool _interacting = false;
         public bool Interacting => _interacting;
@@ -27,13 +26,12 @@ namespace BlueGravity.DialogueSystem
                 Instance = this;
             }
         }
-        //public void HandleDialogue(Dialogue dialogue, NPC transmitter)
-        public void HandleDialogue(Dialogue dialogue, GameObject transmitter)
+        public void HandleDialogue(Dialogue dialogue, NPC transmitter)
         {
             _interacting = true;
             _transmitter = transmitter;
-            //_dialogueUI.EnableDialogueUI(true);
-            //_dialogueUI.SetDialogueText(dialogue._nodes[0]._text);
+            _dialogueUI.EnableDialogueUI(true);
+            _dialogueUI.SetDialogueText(dialogue._nodes[0]._text);
 
             if (dialogue._nodes[0].DialogueActions.Count == 0) { return; }
 
@@ -41,13 +39,13 @@ namespace BlueGravity.DialogueSystem
             
             foreach ( var response in responses)
             {
-                //_dialogueUI.CreateResponseButton(response);
+                _dialogueUI.CreateResponseButton(response);
             }
         }
     
         public void HandleDialogueResponse(DialogueAction action)
         {
-            //_transmitter.HandleResponse(action);
+            _transmitter.HandleResponse(action);
             if (action.EndsDialogue)
             {
                 CloseDialogue();
@@ -61,7 +59,7 @@ namespace BlueGravity.DialogueSystem
 
         private void CloseDialogue()
         {
-            //_dialogueUI.HandleDialogueClosure();
+            _dialogueUI.HandleDialogueClosure();
         }
     }
 }
