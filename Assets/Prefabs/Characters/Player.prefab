@@ -129,6 +129,8 @@ GameObject:
   - component: {fileID: 95000012403032898}
   - component: {fileID: -3807461999191001215}
   - component: {fileID: -1194298460049880304}
+  - component: {fileID: 8048115577215325440}
+  - component: {fileID: 3125816893209124284}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -184,6 +186,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4813eb67ec659b0449e3a5ca126b5305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 10
+  _rigidbody: {fileID: -1194298460049880304}
+  _animator: {fileID: 95000012403032898}
+  _moveAnimator: Moving
 --- !u!50 &-1194298460049880304
 Rigidbody2D:
   serializedVersion: 4
@@ -205,6 +211,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8048115577215325440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010208881502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906fad8071a2a0f4882be961d101c4e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventorySize: 6
+  _equipment: {fileID: 3125816893209124284}
+--- !u!114 &3125816893209124284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010208881502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b09c667c061b240b25456a54fe90da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1000010251440012
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +468,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1000010620708278
@@ -1459,7 +1491,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1000012706336740

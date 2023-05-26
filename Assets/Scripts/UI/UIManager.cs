@@ -10,6 +10,7 @@ namespace BlueGravity.UI
 
         protected InventoryItem _selectedInventoryItem;
         protected InventorySlot _selectedInventorySlot;
+
         public InventoryItem SelectedItem => _selectedInventoryItem;
         public InventorySlot SelectedSlot => _selectedInventorySlot;
         public void SetSelectedInventoryItem(InventoryItem inventoryItem, InventorySlot invetorySlot)

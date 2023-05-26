@@ -2,6 +2,7 @@ using BlueGravity.Inventory;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using BlueGravity.Tapestry;
 
 namespace BlueGravity.UI
 {
@@ -12,20 +13,20 @@ namespace BlueGravity.UI
         [SerializeField] private GameObject _inventorySlotPrefab;
         [Range(1,6)]
         [SerializeField] private int _inventorySize;
-        [SerializeField] private InventoryItem _item;
 
         private List<InventorySlot> _inventorySlots = new List<InventorySlot>();
         public List<InventorySlot> CurrentInventory => _inventorySlots;
 
-
         private void OnEnable()
         {
-            InventoryManager.Instance.ItemEquippedSuccessfully += OnItemEquippedSuccessfully;
-        }
+            TapestryEventRegistry.OnInventoryInitializedTE.RemoveRepeatingMethod(UpdateCurrentInventory);
+            TapestryEventRegistry.OnInventoryInitializedTE.SubscribeMethod(UpdateCurrentInventory);
 
-        private void Start()
-        {
-            UpdateCurrentInventory(InventoryManager.Instance.InventorySize);
+            TapestryEventRegistry.OnInventoryItemAddedTE.RemoveRepeatingMethod(AddItemToInventory);
+            TapestryEventRegistry.OnInventoryItemAddedTE.SubscribeMethod(AddItemToInventory);
+
+            TapestryEventRegistry.OnInventoryItemRemovedTE.RemoveRepeatingMethod(RemoveItemFromInventory);
+            TapestryEventRegistry.OnInventoryItemRemovedTE.SubscribeMethod(RemoveItemFromInventory);
         }
 
         private void UpdateCurrentInventory(int inventorySize)
@@ -50,29 +51,29 @@ namespace BlueGravity.UI
             }
         }
 
-        public void RemoveItemFromInventory(InventorySlot slot)
+        public void RemoveItemFromInventory(InventoryItem item)
         {
-            foreach(var inventoryslot in _inventorySlots)
-            {
-                if (!inventoryslot.IsChildActive) { continue; }
-                if (inventoryslot.InventoryItem.Name.Equals(slot.InventoryItem.Name))
-                {
-                    inventoryslot.UnsetInventoryItem();
-                    UnSelectInventoryItem();
-                    return;
-                }
-            }
+            RemoveItemFromInventorySlot(GetInventorySlot(item));
         }
-        private void OnItemEquippedSuccessfully()
+
+        public InventorySlot GetInventorySlot(InventoryItem item)
         {
-            //Debug.Log("Closing UI Shit");
+            var slot = _inventorySlots.Find(x => x.InventoryItem.Name.Equals(item.Name));
+            Debug.Log(slot.name);
+            return slot;
+        }
+
+        public void RemoveItemFromInventorySlot(InventorySlot slot)
+        {
+            slot.UnsetInventoryItem();
+            UnSelectInventoryItem();
         }
 
         public void HandleEquipment()
         {
             if (_selectedInventoryItem == null) { return; }
             Debug.Log("handling equipment");
-            InventoryManager.Instance.ItemEquipped(_selectedInventoryItem);
+            TapestryEventRegistry.OnItemEquippedTE.Invoke(_selectedInventoryItem);
             UnSelectInventoryItem();
         }
 
@@ -84,6 +85,13 @@ namespace BlueGravity.UI
         public void OpenUI()
         {
             _uiContainer.SetActive(true);
+        }
+
+        private void OnDisable()
+        {
+            TapestryEventRegistry.OnInventoryInitializedTE.RemoveRepeatingMethod(UpdateCurrentInventory);
+            TapestryEventRegistry.OnInventoryItemAddedTE.RemoveRepeatingMethod(AddItemToInventory);
+            TapestryEventRegistry.OnInventoryItemRemovedTE.RemoveRepeatingMethod(RemoveItemFromInventory);
         }
     }
 }

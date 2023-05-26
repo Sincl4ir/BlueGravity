@@ -43,6 +43,7 @@ namespace BlueGravity.Inventory
         {
             if(_inventoryItem == null) { return; }
             if(_UIManager == null) { return; }
+
             var uimanagers = FindObjectsOfType<UIManager>();
             for (int i = 0; i < uimanagers.Length; i++)
             {
