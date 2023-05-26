@@ -26,7 +26,14 @@ namespace BlueGravity.Inventory
 
             TapestryEventRegistry.OnTryToAddItemToInventoryTE.RemoveRepeatingMethod(AddItemToInventory);
             TapestryEventRegistry.OnTryToAddItemToInventoryTE.SubscribeMethod(AddItemToInventory);
+
+            TapestryEventRegistry.OnItemPurchasedByPlayerTE.RemoveRepeatingMethod(AddItemToInventory);
+            TapestryEventRegistry.OnItemPurchasedByPlayerTE.SubscribeMethod(AddItemToInventory);
+
+            TapestryEventRegistry.OnItemSoldByPlayerTE.RemoveRepeatingMethod(RemoveItemFromInventory);
+            TapestryEventRegistry.OnItemSoldByPlayerTE.SubscribeMethod(RemoveItemFromInventory);
         }
+
         private void Start()
         {
             TapestryEventRegistry.OnInventoryInitializedTE.Invoke(_inventorySize);
@@ -56,7 +63,6 @@ namespace BlueGravity.Inventory
 
         public void RemoveItemFromInventory(InventoryItem item)
         {
-            //Tapestry call
             _currentItemsInInventory--;
             TapestryEventRegistry.OnInventoryItemRemovedTE.Invoke(item);
         }
@@ -66,7 +72,7 @@ namespace BlueGravity.Inventory
             RemoveItemFromInventory(item);
         }
         
-        private bool AvailableSpaceInInventory()
+        public bool AvailableSpaceInInventory()
         {
             return _currentItemsInInventory <= _inventorySize;
         }
@@ -76,6 +82,8 @@ namespace BlueGravity.Inventory
             TapestryEventRegistry.OnItemEquippedTE.RemoveRepeatingMethod(ItemEquipped);
             TapestryEventRegistry.OnItemUnequippedTE.RemoveRepeatingMethod(HandleItemUnequipped);
             TapestryEventRegistry.OnTryToAddItemToInventoryTE.RemoveRepeatingMethod(AddItemToInventory);
+            TapestryEventRegistry.OnItemPurchasedByPlayerTE.RemoveRepeatingMethod(AddItemToInventory);
+            TapestryEventRegistry.OnItemSoldByPlayerTE.RemoveRepeatingMethod(RemoveItemFromInventory);
         }
     }
 }

@@ -28,6 +28,14 @@ namespace BlueGravity.UI
 
             TapestryEventRegistry.OnInventoryItemRemovedTE.RemoveRepeatingMethod(RemoveItemFromInventory);
             TapestryEventRegistry.OnInventoryItemRemovedTE.SubscribeMethod(RemoveItemFromInventory);
+
+            TapestryEventRegistry.OnGetItemToStartTransactionTE.RemoveRepeatingMethod(TrySellInventoryItem);
+            TapestryEventRegistry.OnGetItemToStartTransactionTE.SubscribeMethod(TrySellInventoryItem, false);
+        }
+
+        private void TrySellInventoryItem()
+        {
+            TapestryEventRegistry.OnPlayerTrySellItemTE.Invoke(_selectedInventoryItem);
         }
 
         private void UpdateCurrentInventory(int inventorySize)
@@ -88,6 +96,7 @@ namespace BlueGravity.UI
             TapestryEventRegistry.OnInventoryInitializedTE.RemoveRepeatingMethod(UpdateCurrentInventory);
             TapestryEventRegistry.OnInventoryItemAddedTE.RemoveRepeatingMethod(AddItemToInventory);
             TapestryEventRegistry.OnInventoryItemRemovedTE.RemoveRepeatingMethod(RemoveItemFromInventory);
+            TapestryEventRegistry.OnGetItemToStartTransactionTE.RemoveRepeatingMethod(TrySellInventoryItem);
         }
     }
 }

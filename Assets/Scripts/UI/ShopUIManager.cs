@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BlueGravity.Inventory;
-//using BlueGravity.Character;
-using UnityEngine.Events;
+using BlueGravity.Character;
+using BlueGravity.Currency;
+using BlueGravity.Tapestry;
+using System.Linq;
 
 namespace BlueGravity.UI
 {
@@ -11,13 +13,36 @@ namespace BlueGravity.UI
         [SerializeField] private GameObject _uiContainer;
         [SerializeField] private Transform _inventorySlotParent;
         [SerializeField] private GameObject _inventorySlotPrefab;
-        /*
+        
         private List<InventorySlot> _currentItemsInShop = new List<InventorySlot>();
         private Shopper _shopper;
         private CurrencyController _player;
         private int _inventorySize;
 
-        public UnityEvent OnOpenShopEvent;
+        private void OnEnable()
+        {
+            TapestryEventRegistry.OnShopOpenedTE.RemoveRepeatingMethod(OpenShop);
+            TapestryEventRegistry.OnShopOpenedTE.SubscribeMethod(OpenShop, false);
+
+            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(CloseShop);
+            TapestryEventRegistry.OnShopClosedTE.SubscribeMethod(CloseShop, false);
+
+            TapestryEventRegistry.OnItemSoldByPlayerTE.RemoveRepeatingMethod(AddItemToShopInventory);
+            TapestryEventRegistry.OnItemSoldByPlayerTE.SubscribeMethod(AddItemToShopInventory);
+
+            TapestryEventRegistry.OnItemPurchasedByPlayerTE.RemoveRepeatingMethod(RemoveFromShopInventory);
+            TapestryEventRegistry.OnItemPurchasedByPlayerTE.SubscribeMethod(RemoveFromShopInventory);
+
+        }
+
+        private void AddItemToShopInventory(InventoryItem item)
+        {
+            var slot = _currentItemsInShop.First(x => !x.IsChildActive);
+            if (slot == null) { return; }
+            slot.SetInvetoryItem(item);
+            Debug.Log("Added" + slot.InventoryItem.Name);
+        }
+
         private void PopulateShopItems(List<InventoryItem> items)
         {
             if (items.Count > _inventorySize) { return; }
@@ -38,6 +63,7 @@ namespace BlueGravity.UI
                 {
                     GameObject go = Instantiate(_inventorySlotPrefab, _inventorySlotParent);
                     InventorySlot slot = go.GetComponent<InventorySlot>();
+                    slot.SetUIManager(this);
                     _currentItemsInShop.Add(slot);
                 }
             }
@@ -56,14 +82,12 @@ namespace BlueGravity.UI
             UnpopulateShopItems();
             PopulateShopItems(items);
         }
+
         public void OpenShop(List<InventoryItem> items, int inventorySize)
         {
             _inventorySize = inventorySize;
             PopulateShopItems(items);
             _uiContainer.SetActive(true);
-            _shopper = FindObjectOfType<Shopper>();
-            _player = FindObjectOfType<PlayerController>().GetComponent<CurrencyController>();
-            OnOpenShopEvent?.Invoke();
         }
 
         public void CloseShop()
@@ -77,47 +101,28 @@ namespace BlueGravity.UI
         {
             if (_selectedInventoryItem == null) { return; }
 
-            
-            if (!_player.CanAffordCost(_selectedInventoryItem.Value)) 
-            {
-                Debug.Log("Can't afford");
-                return;
-            }
-            //On success try to equip
-            if (!InventoryManager.Instance.AddItemToInventory(_selectedInventoryItem))
-            {
-                Debug.Log("Error purchasing");
-                return;
-            }
-            //handle payment
-            _player.SubstractFromFunds(_selectedInventoryItem.Value);
-            //remove from shop
-            RemoveFromShopInventory(_selectedInventoryItem);
-            _shopper.OnItemSold(_selectedInventoryItem);
-
+            TapestryEventRegistry.OnPlayerTryPurchaseItemTE.Invoke(_selectedInventoryItem);
             UnSelectInventoryItem();
         }
 
         public void HandleSale()
         {
-            if (InventoryManager.Instance.GetSelectedItemInInventory() == null)
-            {
-                Debug.Log("No object selected in inventory");
-                return;
-            }
-            if (!_shopper.OnItemBought(InventoryManager.Instance.GetSelectedItemInInventory()))
-            {
-                Debug.Log("Shopper could not buy");
-                return;
-            }
-            _player.AddToFunds(InventoryManager.Instance.GetSelectedItemInInventory().Value);
-            InventoryManager.Instance.RemoveItemFromInventory(InventoryManager.Instance.GetSelectedSlotInInventory());
-            
+            TapestryEventRegistry.OnGetItemToStartTransactionTE.Invoke();
         }
+
         public void RemoveFromShopInventory(InventoryItem item)
         {
-            _selectedInventorySlot.UnsetInventoryItem();
-        }*/
+            var slot = _currentItemsInShop.Find(x => x.IsChildActive && x.InventoryItem.Name.Equals(item.Name));
+            slot.UnsetInventoryItem();
+        }
+
+        private void OnDisable()
+        {
+            TapestryEventRegistry.OnShopOpenedTE.RemoveRepeatingMethod(OpenShop);
+            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(CloseShop);
+            TapestryEventRegistry.OnItemSoldByPlayerTE.RemoveRepeatingMethod(AddItemToShopInventory);
+            TapestryEventRegistry.OnItemPurchasedByPlayerTE.RemoveRepeatingMethod(RemoveFromShopInventory);
+        }
     }
 }
 //EOF.

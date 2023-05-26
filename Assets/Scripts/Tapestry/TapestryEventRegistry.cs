@@ -1,4 +1,5 @@
 ﻿using BlueGravity.Inventory;
+using System.Collections.Generic;
 
 namespace BlueGravity.Tapestry
 {
@@ -41,6 +42,43 @@ namespace BlueGravity.Tapestry
         public static TapestryEvent<InventoryItem> OnItemUnequippedTE;
         #endregion
 
+        #region Shop
+        /// <summary>
+        /// On Shop Opened
+        /// </summary>
+        public static TapestryEvent<List<InventoryItem>, int> OnShopOpenedTE;
+
+        /// <summary>
+        /// On Shop Closed
+        /// </summary>
+        public static TapestryEvent OnShopClosedTE;
+
+        /// <summary>
+        /// On Item Sold
+        /// </summary>
+        public static TapestryEvent<InventoryItem> OnItemSoldByPlayerTE;
+
+        /// <summary>
+        /// On Item Bought
+        /// </summary>
+        public static TapestryEvent<InventoryItem> OnItemPurchasedByPlayerTE;
+
+        /// <summary>
+        /// On attempt to sell an item
+        /// </summary>
+        public static TapestryEvent<InventoryItem> OnPlayerTrySellItemTE;
+
+        /// <summary>
+        /// On attempt to get an item before proceeding with operations
+        /// </summary>
+        public static TapestryEvent OnGetItemToStartTransactionTE;
+
+        /// <summary>
+        /// On attempt to purchase an item
+        /// </summary>
+        public static TapestryEvent<InventoryItem> OnPlayerTryPurchaseItemTE;
+
+        #endregion
         static TapestryEventRegistry()
         {
             CreateTapestryEvents();
@@ -59,6 +97,16 @@ namespace BlueGravity.Tapestry
             #region Equipment
             OnItemEquippedTE = new TapestryEvent<InventoryItem>();
             OnItemUnequippedTE = new TapestryEvent<InventoryItem>();
+            #endregion
+
+            #region Shop
+            OnShopOpenedTE = new TapestryEvent<List<InventoryItem>, int>();
+            OnShopClosedTE = new TapestryEvent();
+            OnItemSoldByPlayerTE = new TapestryEvent<InventoryItem>();
+            OnItemPurchasedByPlayerTE = new TapestryEvent<InventoryItem>();
+            OnPlayerTryPurchaseItemTE = new TapestryEvent<InventoryItem>();
+            OnPlayerTrySellItemTE = new TapestryEvent<InventoryItem>();
+            OnGetItemToStartTransactionTE = new TapestryEvent();
             #endregion
         }
 
