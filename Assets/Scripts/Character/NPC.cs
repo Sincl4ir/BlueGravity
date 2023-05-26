@@ -14,7 +14,7 @@ namespace BlueGravity.Character
         public virtual void Interact()
         {
             if (DialogueManager.Instance.Interacting) { return; }
-            DialogueManager.Instance.HandleDialogue(_dialogue, this.gameObject);
+            DialogueManager.Instance.HandleDialogue(_dialogue, this);
         }
 
     }

@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9088956673916374240}
+  - component: {fileID: 1516246016}
+  - component: {fileID: 1516246018}
   m_Layer: 0
   m_Name: DialogueUI
   m_TagString: Untagged
@@ -32,6 +34,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1516246016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088956673916374243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69192b06d84cab545abae0f4f98b41e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogueText: {fileID: 9088956674973186402}
+  _uiContainer: {fileID: 9088956673929767787}
+  _buttonsHolder: {fileID: 9088956674041250674}
+  _buttonPrefab: {fileID: 8148496725534728048, guid: 33f895f451789a349927a3061d1ee2f2, type: 3}
+--- !u!114 &1516246018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088956673916374243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb9d214a1e2aa14b83c4b696a7be9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toggleKey: 27
+  _uiContainer: {fileID: 9088956673929767787}
+  _useFuncOnExit: 1
+  ExitInputCallReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1516246016}
+        m_TargetAssemblyTypeName: BlueGravity.UI.DialogueUIManager, Assembly-CSharp
+        m_MethodName: HandleDialogueClosure
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9088956673929767787
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,8 +365,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BGS.UI.DialogueUIManager, Assembly-CSharp
+      - m_Target: {fileID: 1516246016}
+        m_TargetAssemblyTypeName: BlueGravity.UI.DialogueUIManager, Assembly-CSharp
         m_MethodName: HandleDialogueClosure
         m_Mode: 1
         m_Arguments:

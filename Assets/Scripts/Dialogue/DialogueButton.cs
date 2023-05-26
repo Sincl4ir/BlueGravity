@@ -1,6 +1,6 @@
 using UnityEngine;
-//using BGS.UI;
 using TMPro;
+using BlueGravity.UI;
 
 namespace BlueGravity.DialogueSystem
 {
@@ -8,7 +8,7 @@ namespace BlueGravity.DialogueSystem
     {
         [SerializeField] private TextMeshProUGUI _buttonText;
         private DialogueAction _dialogueAction;
-        //private DialogueUIManager _dialogueUIManager;
+        private DialogueUIManager _dialogueUIManager;
 
         public void InitConfiguration(DialogueAction action)
         {
@@ -18,8 +18,8 @@ namespace BlueGravity.DialogueSystem
 
         public void HandleClick()
         {
-            //_dialogueUIManager = FindObjectOfType<DialogueUIManager>();
-            //_dialogueUIManager.HandleResponse(_dialogueAction);
+            _dialogueUIManager = FindObjectOfType<DialogueUIManager>();
+            _dialogueUIManager.HandleResponse(_dialogueAction);
         }
     }
 }

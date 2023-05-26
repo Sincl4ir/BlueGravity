@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 8148496725534728060}
   - component: {fileID: 8148496725534728061}
   - component: {fileID: 8148496725534728050}
-  - component: {fileID: 8148496725534728063}
+  - component: {fileID: 3945014819177476243}
   m_Layer: 0
   m_Name: DialogueButton
   m_TagString: Untagged
@@ -258,8 +258,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8148496725534728063}
-        m_TargetAssemblyTypeName: BGS.DialogueSystem.DialogueButton, Assembly-CSharp
+      - m_Target: {fileID: 3945014819177476243}
+        m_TargetAssemblyTypeName: BlueGravity.DialogueSystem.DialogueButton, Assembly-CSharp
         m_MethodName: HandleClick
         m_Mode: 1
         m_Arguments:
@@ -270,7 +270,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8148496725534728063
+--- !u!114 &3945014819177476243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8148496725534728048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c2d4dff68bd8a47aed7b56fecc53c1, type: 3}
+  m_Script: {fileID: 11500000, guid: cec3845e7cc4daf4a91fffd0944386b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonText: {fileID: 8148496725022301914}
