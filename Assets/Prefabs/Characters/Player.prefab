@@ -147,7 +147,7 @@ Transform:
   m_GameObject: {fileID: 1000010208881502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -4.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4000011226073324}
@@ -198,7 +198,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000010208881502}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -225,6 +225,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inventorySize: 6
   _equipment: {fileID: 3125816893209124284}
+  _items:
+  - {fileID: 11400000, guid: 8f05db011397a104ea37d3481906484d, type: 2}
+  - {fileID: 11400000, guid: 29b8dff37f04fbc45abee73ea9e1dea4, type: 2}
+  - {fileID: 11400000, guid: eb7de981e2b0e0a4b9d1b9dc72b9adf3, type: 2}
 --- !u!114 &3125816893209124284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +241,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b09c667c061b240b25456a54fe90da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _equipmentReferences:
+  - EquipLocation: 0
+    SpriteRenderer: {fileID: 212000010938263010}
+  - EquipLocation: 1
+    SpriteRenderer: {fileID: 212000013352628812}
+  - EquipLocation: 2
+    SpriteRenderer: {fileID: 212000010222169336}
+  - EquipLocation: 3
+    SpriteRenderer: {fileID: 212000011487683862}
+  - EquipLocation: 4
+    SpriteRenderer: {fileID: 212000012642032246}
+  - EquipLocation: 5
+    SpriteRenderer: {fileID: 212000012742084602}
+  _itemsEquipped:
+  - {fileID: 11400000, guid: 907d598a5d26ee947b6a4eebf1679d3c, type: 2}
+  - {fileID: 11400000, guid: a7bad25edb1068e4b9d44e9f921edc1a, type: 2}
+  - {fileID: 11400000, guid: 3a04c126c4eac9c4f98897b262ed77b7, type: 2}
 --- !u!1 &1000010251440012
 GameObject:
   m_ObjectHideFlags: 0

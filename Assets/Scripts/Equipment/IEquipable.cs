@@ -1,4 +1,4 @@
-namespace BlueGravity.Inventory
+namespace BlueGravity.EquipmentSystem
 {
     public interface IEquipable
     {

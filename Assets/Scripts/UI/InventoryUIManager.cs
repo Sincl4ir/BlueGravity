@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using BlueGravity.Tapestry;
+using System.Linq;
 
 namespace BlueGravity.UI
 {
@@ -42,13 +43,10 @@ namespace BlueGravity.UI
 
         public void AddItemToInventory(InventoryItem item)
         {
-            foreach (var slot in _inventorySlots)
-            {
-                if (slot.IsChildActive) { continue; }
-                slot.SetInvetoryItem(item);
-                Debug.Log("Added" + slot.InventoryItem.Name);
-                break;
-            }
+            var slot = _inventorySlots.First(x => !x.IsChildActive);
+            if (slot == null) { return; }
+            slot.SetInvetoryItem(item);
+            Debug.Log("Added" + slot.InventoryItem.Name);
         }
 
         public void RemoveItemFromInventory(InventoryItem item)
@@ -58,21 +56,19 @@ namespace BlueGravity.UI
 
         public InventorySlot GetInventorySlot(InventoryItem item)
         {
-            var slot = _inventorySlots.Find(x => x.InventoryItem.Name.Equals(item.Name));
-            Debug.Log(slot.name);
+            var slot = _inventorySlots.Find(x => x.IsChildActive && x.InventoryItem.Name.Equals(item.Name));
             return slot;
         }
 
         public void RemoveItemFromInventorySlot(InventorySlot slot)
         {
-            slot.UnsetInventoryItem();
+            if (slot != null) { slot.UnsetInventoryItem(); }
             UnSelectInventoryItem();
         }
 
         public void HandleEquipment()
         {
             if (_selectedInventoryItem == null) { return; }
-            Debug.Log("handling equipment");
             TapestryEventRegistry.OnItemEquippedTE.Invoke(_selectedInventoryItem);
             UnSelectInventoryItem();
         }

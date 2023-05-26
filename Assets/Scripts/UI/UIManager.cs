@@ -27,8 +27,8 @@ namespace BlueGravity.UI
         }
         public void SetDescriptionText(InventoryItem item)
         {
-            string l1 = "COST: " + item.Value.ToString();
-            string l2 = item.Description;
+            string l1 = item.Name.ToUpper()+"\n";
+            string l2 = "$" + item.Value.ToString();
 
             _descriptionText.text = l1 + l2;
         }
