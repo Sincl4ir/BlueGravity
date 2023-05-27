@@ -38,6 +38,8 @@ namespace BlueGravity.Inventory
         {
             TapestryEventRegistry.OnInventoryInitializedTE.Invoke(_inventorySize);
 
+            if (_items.Count <= 0) { return; }
+
             foreach (var item in _items)
             {
                 AddItemToInventory(item);

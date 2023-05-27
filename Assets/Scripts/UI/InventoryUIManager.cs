@@ -12,6 +12,7 @@ namespace BlueGravity.UI
         [SerializeField] private GameObject _uiContainer;
         [SerializeField] private Transform _inventorySlotParent;
         [SerializeField] private GameObject _inventorySlotPrefab;
+        [SerializeField] private ActivateUI _activateUI;
         [Range(1,6)]
         [SerializeField] private int _inventorySize;
 
@@ -31,6 +32,22 @@ namespace BlueGravity.UI
 
             TapestryEventRegistry.OnGetItemToStartTransactionTE.RemoveRepeatingMethod(TrySellInventoryItem);
             TapestryEventRegistry.OnGetItemToStartTransactionTE.SubscribeMethod(TrySellInventoryItem, false);
+
+            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(OnShopClosed);
+            TapestryEventRegistry.OnShopClosedTE.SubscribeMethod(OnShopClosed, false);
+
+            TapestryEventRegistry.OnShopOpenedTE.RemoveRepeatingMethod(OnShopOpened);
+            TapestryEventRegistry.OnShopOpenedTE.SubscribeMethod(OnShopOpened, false);
+        }
+
+        private void OnShopClosed()
+        {
+            _activateUI.HandleUIActivation(false);
+        }
+
+        private void OnShopOpened(List<InventoryItem> arg1, int arg2)
+        {
+            _activateUI.HandleUIActivation(true);
         }
 
         private void TrySellInventoryItem()
@@ -54,7 +71,7 @@ namespace BlueGravity.UI
             var slot = _inventorySlots.First(x => !x.IsChildActive);
             if (slot == null) { return; }
             slot.SetInvetoryItem(item);
-            Debug.Log("Added" + slot.InventoryItem.Name);
+            //Debug.Log("Added" + slot.InventoryItem.Name);
         }
 
         public void RemoveItemFromInventory(InventoryItem item)
@@ -97,6 +114,8 @@ namespace BlueGravity.UI
             TapestryEventRegistry.OnInventoryItemAddedTE.RemoveRepeatingMethod(AddItemToInventory);
             TapestryEventRegistry.OnInventoryItemRemovedTE.RemoveRepeatingMethod(RemoveItemFromInventory);
             TapestryEventRegistry.OnGetItemToStartTransactionTE.RemoveRepeatingMethod(TrySellInventoryItem);
+            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(OnShopClosed);
+            TapestryEventRegistry.OnShopOpenedTE.RemoveRepeatingMethod(OnShopOpened);
         }
     }
 }

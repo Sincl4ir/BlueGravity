@@ -78,6 +78,11 @@ namespace BlueGravity.Tapestry
         /// </summary>
         public static TapestryEvent<InventoryItem> OnPlayerTryPurchaseItemTE;
 
+        /// <summary>
+        /// On player funds updated
+        /// </summary>
+        public static TapestryEvent<int> OnPlayerFundsUpdatedTE;
+
         #endregion
         static TapestryEventRegistry()
         {
@@ -107,6 +112,7 @@ namespace BlueGravity.Tapestry
             OnPlayerTryPurchaseItemTE = new TapestryEvent<InventoryItem>();
             OnPlayerTrySellItemTE = new TapestryEvent<InventoryItem>();
             OnGetItemToStartTransactionTE = new TapestryEvent();
+            OnPlayerFundsUpdatedTE = new TapestryEvent<int>();
             #endregion
         }
 

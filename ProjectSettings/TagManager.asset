@@ -13,11 +13,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Environment
-  - Player
-  - 
-  - 
-  - 
+  - Environment1
+  - Environment2
+  - Environment3
+  - Entities
+  - Stairs
   - 
   - 
   - 
@@ -42,4 +42,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 772499317
+    locked: 0
+  - name: Foreground
+    uniqueID: 3568683667
+    locked: 0
+  - name: Characters
+    uniqueID: 445883763
     locked: 0

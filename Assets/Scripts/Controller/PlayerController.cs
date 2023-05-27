@@ -2,6 +2,7 @@ using BlueGravity.Character;
 using BlueGravity.Currency;
 using BlueGravity.Inventory;
 using BlueGravity.Tapestry;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BlueGravity.Controller
@@ -27,11 +28,28 @@ namespace BlueGravity.Controller
 
             TapestryEventRegistry.OnItemSoldByPlayerTE.RemoveRepeatingMethod(OnItemSold);
             TapestryEventRegistry.OnItemSoldByPlayerTE.SubscribeMethod(OnItemSold);
+
+            TapestryEventRegistry.OnShopOpenedTE.RemoveRepeatingMethod(OnShopOpened);
+            TapestryEventRegistry.OnShopOpenedTE.SubscribeMethod(OnShopOpened, false);
+
+            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(OnShopClosed);
+            TapestryEventRegistry.OnShopClosedTE.SubscribeMethod(OnShopClosed,false);
+        }
+
+        private void OnShopClosed()
+        {
+            EnableController(true);
+        }
+
+        private void OnShopOpened(List<InventoryItem> arg1, int arg2)
+        {
+            EnableController(false);
         }
 
         private void OnItemSold(InventoryItem item)
         {
             _currencyController.AddToFunds(item.Value);
+            TapestryEventRegistry.OnPlayerFundsUpdatedTE.Invoke(_currencyController.Funds);
         }
 
         private void OnTryPurchaseItem(InventoryItem item)
@@ -41,6 +59,7 @@ namespace BlueGravity.Controller
 
             _currencyController.SubstractFromFunds(item.Value);
             TapestryEventRegistry.OnItemPurchasedByPlayerTE.Invoke(item);
+            TapestryEventRegistry.OnPlayerFundsUpdatedTE.Invoke(_currencyController.Funds);
         }
 
         private void Start()
@@ -120,6 +139,8 @@ namespace BlueGravity.Controller
         {
             TapestryEventRegistry.OnPlayerTryPurchaseItemTE.RemoveRepeatingMethod(OnTryPurchaseItem);
             TapestryEventRegistry.OnItemSoldByPlayerTE.RemoveRepeatingMethod(OnItemSold);
+            TapestryEventRegistry.OnShopOpenedTE.RemoveRepeatingMethod(OnShopOpened);
+            TapestryEventRegistry.OnShopClosedTE.RemoveRepeatingMethod(OnShopClosed);
         }
     }
 }

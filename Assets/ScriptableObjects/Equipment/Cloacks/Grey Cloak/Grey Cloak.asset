@@ -15,7 +15,7 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 250530d3e9754ed418009e3d539275b3, type: 3}
   Name: 'Grey Cloak '
   EquipLocation: 2
-  Value: 0
+  Value: 120
   HasPairedItem: 1
   PairedItem: {fileID: 11400000, guid: f3868411c506bbb4abb5356108b8767b, type: 2}
   Description: 
