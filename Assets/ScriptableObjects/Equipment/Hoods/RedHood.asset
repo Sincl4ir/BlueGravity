@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418a900a0b6462b449af43f95aaa0360, type: 3}
   m_Name: RedHood
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 3bedf94d8c0884940bd2352b538d97fe, type: 3}
+  Sprite: {fileID: 21300000, guid: 20eb058aea3c3a744bb5d47a1610550a, type: 3}
   Name: Red Hood
   EquipLocation: 1
-  Value: 0
+  Value: 20
   HasPairedItem: 0
   PairedItem: {fileID: 0}
   Description: 

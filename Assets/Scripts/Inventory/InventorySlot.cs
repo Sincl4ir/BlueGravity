@@ -25,7 +25,7 @@ namespace BlueGravity.Inventory
             _inventoryItem = item;
             _childSpriteRenderer.sprite = item.Sprite;
             IsChildActive = true;
-            Debug.Log(IsChildActive);
+            //Debug.Log(IsChildActive);
             _childInventoryItem.SetActive(IsChildActive);
         }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace BGS.UI
+namespace BlueGravity.UI
 {
     public class ActivateUI : MonoBehaviour
     {
@@ -32,6 +32,11 @@ namespace BGS.UI
                 }
             }
 
+        }
+
+        public void HandleUIActivation(bool enable)
+        {
+            _uiContainer.SetActive(enable);
         }
     }
 }

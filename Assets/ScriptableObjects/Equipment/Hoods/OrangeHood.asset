@@ -15,7 +15,7 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 468244f274f38f64b85773c7888444b6, type: 3}
   Name: Orange Hood
   EquipLocation: 1
-  Value: 0
+  Value: 10
   HasPairedItem: 0
   PairedItem: {fileID: 0}
   Description: 

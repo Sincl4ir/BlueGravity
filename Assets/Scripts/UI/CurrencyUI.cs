@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using BlueGravity.Currency;
+using BlueGravity.Tapestry;
 
 namespace BlueGravity.UI
 {
@@ -9,6 +10,12 @@ namespace BlueGravity.UI
         [SerializeField] private CurrencyController _currencyController;
         [SerializeField] private TextMeshProUGUI _fundsText;
 
+        private void OnEnable()
+        {
+            TapestryEventRegistry.OnPlayerFundsUpdatedTE.RemoveRepeatingMethod(SetFunds);
+            TapestryEventRegistry.OnPlayerFundsUpdatedTE.SubscribeMethod(SetFunds);
+
+        }
         // Start is called before the first frame update
         void Start()
         {
@@ -19,6 +26,11 @@ namespace BlueGravity.UI
         {
             string str = "$" + funds.ToString();
             _fundsText.text = str;
+        }
+
+        private void OnDisable()
+        {
+            TapestryEventRegistry.OnPlayerFundsUpdatedTE.RemoveRepeatingMethod(SetFunds);
         }
     }
 }

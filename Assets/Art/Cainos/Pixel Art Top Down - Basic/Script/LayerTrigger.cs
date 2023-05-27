@@ -4,21 +4,15 @@ namespace Cainos.PixelArtTopDown_Basic
 {
     public class LayerTrigger : MonoBehaviour
     {
-        [SerializeField] public string layer;
-        //[SerializeField] public SortingLayer _sortingLayer;
+        [SerializeField] private string _layer;
+
+        private string _stairLayer = "Stairs";
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            Debug.Log($"Layer mask {layer} layer int {layer}");
-            SetLayerAllChildren(other.gameObject.transform, layer);
-            //other.gameObject.layer = LayerMask.NameToLayer(layer.ToString());
-
-            /*other.gameObject.GetComponent<SpriteRenderer>().sortingLayerName = _sortingLayer.ToString();
-            SpriteRenderer[] srs = other.gameObject.GetComponentsInChildren<SpriteRenderer>();
-            foreach ( SpriteRenderer sr in srs)
-            {
-                sr.sortingLayerName = _sortingLayer.ToString();
-            }*/
+            if (other.isTrigger) { return; }
+            Debug.Log($"Layer mask {_layer} layer int {_layer}");
+            SetLayerAllChildren(other.gameObject.transform, _layer);
         }
 
         void SetLayerAllChildren(Transform root, string layer)
@@ -26,7 +20,6 @@ namespace Cainos.PixelArtTopDown_Basic
             var children = root.GetComponentsInChildren<Transform>(includeInactive: true);
             foreach (var child in children)
             {
-                //            Debug.Log(child.name);
                 child.gameObject.layer = LayerMask.NameToLayer(layer);
             }
         }
